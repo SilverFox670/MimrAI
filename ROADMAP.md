@@ -33,7 +33,7 @@ The MVP serves as a **fun, proof-of-concept**, demonstrating the flexibility of 
 
 | Layer | Role | Volatility |
 |-------|------|------------|
-| **User Interface** | Discord / Web UI | Low |
+| **User Interface** | Discord / Web UI | High |
 | **Conversational Layer** | DM / Player mode, command parsing | Low |
 | **Query Enrichment** | Story-focused prompt shaping; optional mechanics adapter | Low |
 | **RAG Engine** | Store & retrieve campaign content (NPCs, scenes, quests, items) | Medium |
