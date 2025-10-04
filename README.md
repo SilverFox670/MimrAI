@@ -26,67 +26,74 @@ MimrAI uses **Volatility-Based Decomposition**:
 
 ```mermaid
 flowchart TD
-    %% User
-    subgraph User [User - You & Players]
-        Q[User Query or Command]
+    %% User Devices
+    subgraph Devices ["User Devices"]
+        Laptop[Laptop / Local PC]
+        Tablet[Tablet / Mobile]
+        DiscordClient[Discord / Web UI]
     end
 
-    %% Conversational Layer - Low volatility
-    subgraph Conversational ["Conversational Interface Layer - Low volatility"]
-        Mode["Mode Manager - Daily / DnD-Player / DnD-DM"]
+    %% Conversational Layer - Low Volatility
+    subgraph Conversational ["Conversational Layer - Low Volatility"]
+        Mode["Mode Manager - Daily / Player / DM"]
         Cmds["Command Processing - ask / summarize / npc / generate"]
     end
 
-    %% Query Enrichment Layer - Low volatility
-    subgraph Enrichment ["Query Enrichment Layer - System Adapter"]
+    %% Query Enrichment Layer - Low Volatility
+    subgraph Enrichment ["Query Enrichment Layer - Low Volatility"]
         Intent["Detect Intent - Story or Mechanics"]
-        Translate["Translate Mechanics - DnD to Legends"]
+        Translate["Translate Mechanics - System Adapter"]
         Shape["Shape Prompt for LLM"]
     end
 
-    %% Context Nodes - Medium volatility
-    subgraph Context ["Context Nodes - Medium volatility"]
-        PlayerIdx["Player / character index"]
-        DMIdx["DM / campaign index"]
+    %% RAG Engine - Low/Medium Volatility
+    subgraph RAG ["RAG Engine"]
+        Embed["Embeddings / Vector DB - Medium Volatility"]
+        Retrieve["Context Retrieval - Low Volatility"]
+        Generate["LLM Generation - Low Volatility"]
     end
 
-    %% Content Sources - High volatility
-    subgraph Content ["Content Sources - High volatility"]
-        Notes["Markdown / Obsidian / Notion - daily notes"]
-        NPCs["NPCs / Quests / Taverns - generated & evolving"]
-        Sessions["Session logs - session notes"]
+    %% Content Sources - High Volatility
+    subgraph Content ["Content Sources - High Volatility"]
+        Notes["Local Notes (Markdown / Obsidian)"]
+        NPCs["NPCs / Quests / Taverns"]
+        Sessions["Session Logs"]
     end
 
-    %% RAG Engine - Low volatility
-    subgraph Engine ["RAG Engine - Low volatility"]
-        Embed["Embeddings and Vector DB"]
-        Retrieve["Context retrieval"]
-        Generate["LLM generation"]
+    %% Optional Cloud - Low Volatility
+    subgraph Cloud ["Optional Cloud Services - Low Volatility"]
+        CloudDB["Cloud Vector DB / Index Mirror"]
+        CloudLLM["Cloud LLM API"]
     end
 
-    %% Core flows
-    Q --> Conversational
+    %% Device Flows
+    Laptop --> DiscordClient
+    Tablet --> DiscordClient
+    DiscordClient --> Conversational
     Conversational --> Mode
     Mode --> Cmds
     Cmds --> Enrichment
-    Enrichment --> Context
-    Context --> Embed
+    Enrichment --> RAG
+
+    %% RAG -> Local or Cloud
+    Notes --> Embed
+    NPCs --> Embed
+    Sessions --> Embed
     Embed --> Retrieve
     Retrieve --> Generate
-    Generate --> Conversational
 
-    %% Content -> Indexing -> Embed
-    Notes --> DailyIdx
-    NPCs --> DMIdx
-    Sessions --> DMIdx
+    %% LLM paths
+    Generate --> LLMLocal[Local LLM]
+    Generate --> CloudLLM
 
-    DailyIdx --> Embed
-    PlayerIdx --> Embed
-    DMIdx --> Embed
+    %% Optional cloud DB sync
+    Embed --> CloudDB
+    CloudDB --> Retrieve
 
-    %% Generated artifacts get saved back into campaign index
-    Generate --> NPCs
-    Generate --> DMIdx
+    %% Return to user
+    LLMLocal --> Conversational
+    CloudLLM --> Conversational
+    Conversational --> DiscordClient
 ````
 
 ---
