@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+.env*
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+logs/
+*.log
+
+# Test coverage
+coverage/
+
+# Cache directories
+.cache/
+data/cache/
+
+# Local data
+data/vectors/
+data/content/
+
+# OS files
+.DS_Store
+Thumbs.db

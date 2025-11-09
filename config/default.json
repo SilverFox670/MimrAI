@@ -1,0 +1,20 @@
+{
+  "discord": {
+    "token": "",
+    "clientId": "",
+    "guildId": ""
+  },
+  "openai": {
+    "apiKey": ""
+  },
+  "storage": {
+    "type": "chroma",
+    "path": "./data/vectors"
+  },
+  "cache": {
+    "path": "./data/cache"
+  },
+  "content": {
+    "path": "./data/content"
+  }
+}

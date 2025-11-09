@@ -1,0 +1,40 @@
+{
+  "name": "mimrai",
+  "version": "0.1.0",
+  "description": "Knowledge management and RAG-based assistant system",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "check": "npm run lint && npm run test:coverage"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0",
+    "chokidar": "^3.5.3",
+    "chromadb": "^1.5.0",
+    "discord.js": "^14.0.0",
+    "dotenv": "^16.0.0",
+    "openai": "^4.0.0",
+    "yaml": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/chokidar": "^2.1.3",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^2.0.0",
+    "ts-jest": "^29.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.0.0"
+  }
+}
